@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="AssetRipper.Primitives">
+      <HintPath>C:\修复\decompiled_gcmod\GCMod\bin\Debug\netcoreapp6.0\AssetRipper.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="LibCpp2IL">
+      <HintPath>C:\修复\decompiled_gcmod\GCMod\bin\Debug\netcoreapp6.0\LibCpp2IL.dll</HintPath>
+    </Reference>
+    <Reference Include="Iced">
+      <HintPath>C:\修复\decompiled_gcmod\GCMod\bin\Debug\netcoreapp6.0\Iced.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

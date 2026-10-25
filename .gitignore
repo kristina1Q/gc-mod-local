@@ -1,0 +1,37 @@
+# Build and Binary Outputs
+[Bb]in/
+[Oo]bj/
+*.dll
+*.pdb
+*.exe
+!src/**/*.dll
+!libs/Utility.dll
+!winhttp.dll
+
+# Visual Studio & IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+venv/
+.venv/
+
+# Archives and Packages
+*.zip
+*.7z
+*.rar
+*.tar.gz
+release_staging/
+
+# Temporary / OS
+.DS_Store
+Thumbs.db
+*.log
