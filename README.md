@@ -3,7 +3,6 @@
 [![Release](https://img.shields.io/github/v/release/kristina1Q/gc-mod-local?color=blue&label=Release)](https://github.com/kristina1Q/gc-mod-local/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![BepInEx](https://img.shields.io/badge/BepInEx-6.0_IL2CPP-purple)](https://github.com/BepInEx/BepInEx)
-[![Status](https://img.shields.io/badge/Offline-100%25_Local-green)](#)
 
 本项目为 DMM GAMES / FANZA 平台二次元策略 RPG 游戏《**ガールズクリエイション - 少女美術館 -**》（Girls' Creation / 少女美术馆）提供高品质、完全离线、开箱即用的简体中文汉化支持。
 
@@ -19,7 +18,7 @@
 
 ### 步骤 1：下载补丁
 前往 [GitHub Releases](https://github.com/kristina1Q/gc-mod-local/releases) 页面，下载最新发布的压缩包：
-- **`GCMod-Local-v7.1.0.zip`**
+`GCMod-Local-v7.1.0.zip`
 
 ### 步骤 2：解压并复制到游戏目录
 1. 解压下载的 `GCMod-Local-v7.1.0.zip`。
@@ -55,11 +54,11 @@
 ## 🗑️ 卸载说明
 
 如需卸载汉化或还原游戏纯净状态，只需删除游戏根目录下的以下文件即可，完全不影响原版游戏：
-- `BepInEx/` 文件夹
-- `dotnet/` 文件夹
-- `winhttp.dll`
-- `doorstop_config.ini`
-- `.doorstop_version`
+1. `BepInEx/` 文件夹
+2. `dotnet/` 文件夹
+3. `winhttp.dll`
+4. `doorstop_config.ini`
+5. `.doorstop_version`
 
 ---
 
@@ -101,9 +100,8 @@ gc-mod-local/
 
 ## 🤝 致谢与贡献 (Acknowledgements)
 
-- 感谢原开源项目 [anosu/girlscreation-translation](https://github.com/anosu/girlscreation-translation) 及其全部贡献者在剧情翻译、基础框架搭建方面付出的辛勤努力。
-- 感谢 [BepInEx](https://github.com/BepInEx/BepInEx) 与 [Il2CppInterop](https://github.com/BepInEx/Il2CppInterop) 为 Unity IL2CPP 平台 Mod 注入提供的优秀基础设施。
-- 感谢广大热爱《Girls' Creation》的美术馆馆长们的支持与反馈！
+1. 感谢原开源项目 [anosu/girlscreation-translation](https://github.com/anosu/girlscreation-translation) 及其全部贡献者在剧情翻译、基础框架搭建方面付出的辛勤努力。
+2. 感谢广大热爱《Girls' Creation》的美术馆馆长们的支持与反馈！
 
 ---
 
