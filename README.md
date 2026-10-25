@@ -11,11 +11,7 @@
 
 ## 📖 背景与项目致敬 (Attribution)
 
-本项目基于开源社区知名原汉化项目 [**anosu/girlscreation-translation**](https://github.com/anosu/girlscreation-translation) 的优秀架构与初始翻译数据进行深度重构与衍生开发。
-
-原版插件主要依赖在线 GitHub Raw CDN 动态请求翻译资源。在国内网络环境下，常受到 DNS 污染、CDN 连接超时及网络卡顿的影响，且随着游戏版本演进，许多新登场角色技法、主数据表及动态 UI 无法被完全覆盖。
-
-本项目将其改造为本地加载方案，所有剧情、技法与字典均从本地加载，无需连接外部网络。
+本项目基于开源社区知名原汉化项目 [**anosu/girlscreation-translation**](https://github.com/anosu/girlscreation-translation) 的优秀架构与初始翻译数据进行本地化衍生开发。
 
 ---
 
