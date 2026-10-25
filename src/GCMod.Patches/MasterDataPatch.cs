@@ -179,6 +179,21 @@ public static class MasterDataPatch
 			IntPtr klass = IL2CPP.il2cpp_object_get_class(pendingLoader);
 			IntPtr intPtr = ReadFieldPointer(pendingLoader, klass, "attribute");
 			MasterAttribute arg = ((intPtr == IntPtr.Zero) ? ((MasterAttribute)null) : new MasterAttribute(intPtr));
+			if (arg != null && !string.IsNullOrEmpty(arg.Object))
+			{
+				try
+				{
+					string dumpDir = @"c:\修复\raw_master_dump";
+					string dumpFile = System.IO.Path.Combine(dumpDir, arg.Object + ".json");
+					if (!System.IO.File.Exists(dumpFile))
+					{
+						System.IO.Directory.CreateDirectory(dumpDir);
+						System.IO.File.WriteAllText(dumpFile, __result);
+						Plugin.Log.LogInfo($"[MasterDumper] Dumped master table: {arg.Object}");
+					}
+				}
+				catch {}
+			}
 			__result = JsonRewriter?.Invoke(arg, __result) ?? __result;
 		}
 		catch (Exception ex)

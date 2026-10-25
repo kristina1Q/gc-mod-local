@@ -113,7 +113,7 @@ public static class UiPatch
 	[HarmonyPrefix]
 	public static void SetTextPrefix(TMP_Text __instance, ref string value)
 	{
-		if (_isTranslating || value == null || !Config.Translation.Value)
+		if (_isTranslating || value == null || value.Length <= 1 || !Config.Translation.Value)
 		{
 			return;
 		}
@@ -137,7 +137,7 @@ public static class UiPatch
 		{
 			_isTranslating = true;
 			string current = ((TMP_Text)__instance).text;
-			if (!string.IsNullOrEmpty(current) && TryTranslate(current, out string translated))
+			if (!string.IsNullOrEmpty(current) && current.Length > 1 && TryTranslate(current, out string translated))
 			{
 				((TMP_Text)__instance).text = translated;
 			}
@@ -155,7 +155,7 @@ public static class UiPatch
 	[HarmonyPrefix]
 	public static void SetLegacyTextPrefix(Text __instance, ref string value)
 	{
-		if (_isTranslating || value == null || !Config.Translation.Value)
+		if (_isTranslating || value == null || value.Length <= 1 || !Config.Translation.Value)
 		{
 			return;
 		}
