@@ -35,3 +35,7 @@ release_staging/
 .DS_Store
 Thumbs.db
 *.log
+
+# Internal tools
+tools/
+gc-tool/
