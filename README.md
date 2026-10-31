@@ -18,10 +18,10 @@
 
 ### 步骤 1：下载补丁
 前往 [GitHub Releases](https://github.com/kristina1Q/gc-mod-local/releases) 页面，下载最新发布的压缩包：
-`GCMod-Local-v7.1.0.zip`
+`GCMod-Local-v7.2.0.zip`
 
 ### 步骤 2：解压并复制到游戏目录
-1. 解压下载的 `GCMod-Local-v7.1.0.zip`。
+1. 解压下载的 `GCMod-Local-v7.2.0.zip`。
 2. 将压缩包解压出的所有文件与文件夹，复制并粘贴到您的《Girls' Creation》游戏安装根目录下（即 **`GC.exe` 所在的文件夹**）。
 
 解压后游戏根目录结构预览：
