@@ -63,7 +63,21 @@ public static class UiPatch
 	public static bool TryTranslate(string original, out string translated)
 	{
 		translated = null;
-		if (string.IsNullOrEmpty(original) || original.Length > 200 || _translations.Count == 0)
+		if (string.IsNullOrEmpty(original) || original.Length <= 1 || original.Length > 200 || _translations.Count == 0)
+		{
+			return false;
+		}
+
+		bool hasLetter = false;
+		for (int i = 0; i < original.Length; i++)
+		{
+			if (char.IsLetter(original[i]))
+			{
+				hasLetter = true;
+				break;
+			}
+		}
+		if (!hasLetter)
 		{
 			return false;
 		}
@@ -113,14 +127,20 @@ public static class UiPatch
 	[HarmonyPrefix]
 	public static void SetTextPrefix(TMP_Text __instance, ref string value)
 	{
-		if (_isTranslating || value == null || value.Length <= 1 || !Config.Translation.Value)
+		try
 		{
-			return;
-		}
+			if (_isTranslating || value == null || value.Length <= 1 || !Config.Translation.Value)
+			{
+				return;
+			}
 
-		if (TryTranslate(value, out string translated))
+			if (TryTranslate(value, out string translated))
+			{
+				value = translated;
+			}
+		}
+		catch
 		{
-			value = translated;
 		}
 	}
 
@@ -155,14 +175,20 @@ public static class UiPatch
 	[HarmonyPrefix]
 	public static void SetLegacyTextPrefix(Text __instance, ref string value)
 	{
-		if (_isTranslating || value == null || value.Length <= 1 || !Config.Translation.Value)
+		try
 		{
-			return;
-		}
+			if (_isTranslating || value == null || value.Length <= 1 || !Config.Translation.Value)
+			{
+				return;
+			}
 
-		if (TryTranslate(value, out string translated))
+			if (TryTranslate(value, out string translated))
+			{
+				value = translated;
+			}
+		}
+		catch
 		{
-			value = translated;
 		}
 	}
 }

@@ -117,18 +117,26 @@ public sealed class TranslationManager : IDisposable
 
 	public string TranslateMasterData(string tableName, string json)
 	{
-		string[] value = Config.MasterDataTables.Value;
-		TranslationSession translationSession = Volatile.Read(ref _session);
-		if (translationSession == null || !Config.Translation.Value || !MasterDataTranslator.IsEnabled(tableName, value))
+		try
 		{
+			string[] value = Config.MasterDataTables.Value;
+			TranslationSession translationSession = Volatile.Read(ref _session);
+			if (translationSession == null || !Config.Translation.Value || !MasterDataTranslator.IsEnabled(tableName, value))
+			{
+				return json;
+			}
+			string obj = WaitFor(translationSession.GetMasterForUseAsync(), "master")?.Translate(tableName, json, value) ?? json;
+			if ((object)obj != json)
+			{
+				Logger.Info("Master data translated: " + tableName);
+			}
+			return obj;
+		}
+		catch (Exception ex)
+		{
+			Logger.Warn($"TranslateMasterData failed for {tableName}: {ex.Message}");
 			return json;
 		}
-		string obj = WaitFor(translationSession.GetMasterForUseAsync(), "master")?.Translate(tableName, json, value) ?? json;
-		if ((object)obj != json)
-		{
-			Logger.Info("Master data translated: " + tableName);
-		}
-		return obj;
 	}
 
 	private static T WaitFor<T>(Task<T> task, string resource) where T : class

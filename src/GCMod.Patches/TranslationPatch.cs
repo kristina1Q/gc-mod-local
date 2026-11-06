@@ -1,3 +1,4 @@
+using System;
 using BepInEx.Core.Logging.Interpolation;
 using BepInEx.Logging;
 using DMM.OLG.Unity.Extensions.Novel;
@@ -13,19 +14,47 @@ public static class TranslationPatch
 	[HarmonyPatch(typeof(ScriptObjectManager), "Create")]
 	public static void SetupTranslation(string prefix, string id)
 	{
-		//IL_000a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0010: Expected O, but got Unknown
-		Plugin.Log.LogInfo($"Prefix: {prefix}, Id: {id}");
-		Plugin.Trans.PrepareNovel(int.Parse(id));
+		try
+		{
+			Plugin.Log.LogInfo($"Prefix: {prefix}, Id: {id}");
+			if (int.TryParse(id, out int novelId))
+			{
+				Plugin.Trans.PrepareNovel(novelId);
+			}
+			else
+			{
+				Plugin.Log.LogWarning($"[TranslationPatch] Non-integer novel Id: {id}");
+			}
+		}
+		catch (Exception ex)
+		{
+			Plugin.Log.LogWarning($"[TranslationPatch] SetupTranslation failed: {ex.Message}");
+		}
 	}
 
 	[HarmonyPrefix]
 	[HarmonyPatch(typeof(EventTitle), "ShowBlurEffect")]
 	public static void SetMessageTitle(EventTitle __instance)
 	{
-		if (Config.Translation.Value && PatchManager.TryGetCurrentNovel(out var translation) && translation.TryGetValue(((TMP_Text)__instance._TitleMain).text, out var value))
+		try
 		{
-			((TMP_Text)__instance._TitleMain).text = value;
+			if (!Config.Translation.Value || __instance == null || (UnityEngine.Object)(object)__instance == (UnityEngine.Object)null)
+			{
+				return;
+			}
+			var titleMain = __instance._TitleMain;
+			if (titleMain == null || (UnityEngine.Object)(object)titleMain == (UnityEngine.Object)null)
+			{
+				return;
+			}
+			string curText = ((TMP_Text)titleMain).text;
+			if (!string.IsNullOrEmpty(curText) && PatchManager.TryGetCurrentNovel(out var translation) && translation != null && translation.TryGetValue(curText, out var value))
+			{
+				((TMP_Text)titleMain).text = value;
+			}
+		}
+		catch
+		{
 		}
 	}
 
@@ -33,9 +62,19 @@ public static class TranslationPatch
 	[HarmonyPatch(typeof(EventMessage), "SetName")]
 	public static void SetMessageName(ref string text)
 	{
-		if (Config.Translation.Value && PatchManager.TryGetCurrentNovel(out var _) && Plugin.Trans.Names.TryGetValue(text, out var value))
+		try
 		{
-			text = value;
+			if (string.IsNullOrEmpty(text) || !Config.Translation.Value)
+			{
+				return;
+			}
+			if (PatchManager.TryGetCurrentNovel(out var _) && Plugin.Trans?.Names != null && Plugin.Trans.Names.TryGetValue(text, out var value))
+			{
+				text = value;
+			}
+		}
+		catch
+		{
 		}
 	}
 
@@ -43,13 +82,19 @@ public static class TranslationPatch
 	[HarmonyPatch(typeof(EventText), "Parse")]
 	public static void SetMessageText(EventText __instance, ref string message)
 	{
-		if (Config.Translation.Value && PatchManager.TryGetCurrentNovel(out var translation) && translation.TryGetValue(message, out var value))
+		try
 		{
-			message = value;
+			if (!string.IsNullOrEmpty(message) && Config.Translation.Value && PatchManager.TryGetCurrentNovel(out var translation) && translation != null && translation.TryGetValue(message, out var value))
+			{
+				message = value;
+			}
+			if (Config.ModifyText.Value && __instance != null && (UnityEngine.Object)(object)__instance != (UnityEngine.Object)null)
+			{
+				__instance.fontSpacing = Config.CharacterSpacing.Value;
+			}
 		}
-		if (Config.ModifyText.Value)
+		catch
 		{
-			__instance.fontSpacing = Config.CharacterSpacing.Value;
 		}
 	}
 }

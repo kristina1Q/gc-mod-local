@@ -102,31 +102,43 @@ public sealed class MasterDataTranslator
 
 	public string Translate(string tableName, string json, string[] enabledTables)
 	{
-		if (!IsEnabled(tableName, enabledTables) || !_tables.TryGetValue(tableName, out var value))
+		try
 		{
-			return json;
-		}
-		JsonNode jsonNode = JsonNode.Parse(json);
-		bool flag = false;
-		if (jsonNode is JsonArray jsonArray)
-		{
-			foreach (JsonNode item in jsonArray)
+			if (!IsEnabled(tableName, enabledTables) || !_tables.TryGetValue(tableName, out var value))
 			{
-				if (item is JsonObject record)
+				return json;
+			}
+			JsonNode jsonNode = JsonNode.Parse(json);
+			if (jsonNode == null)
+			{
+				return json;
+			}
+			bool flag = false;
+			if (jsonNode is JsonArray jsonArray)
+			{
+				foreach (JsonNode item in jsonArray)
 				{
-					flag |= TranslateRecord(record, value);
+					if (item is JsonObject record)
+					{
+						flag |= TranslateRecord(record, value);
+					}
 				}
 			}
+			else if (jsonNode is JsonObject record2)
+			{
+				flag = TranslateRecord(record2, value);
+			}
+			if (!flag)
+			{
+				return json;
+			}
+			return jsonNode.ToJsonString(JsonOptions);
 		}
-		else if (jsonNode is JsonObject record2)
+		catch (Exception ex)
 		{
-			flag = TranslateRecord(record2, value);
-		}
-		if (!flag)
-		{
+			Logger.Warn($"Failed to translate master table {tableName}: {ex.Message}");
 			return json;
 		}
-		return jsonNode.ToJsonString(JsonOptions);
 	}
 
 	private static bool TranslateRecord(JsonObject record, FieldRule[] fields)

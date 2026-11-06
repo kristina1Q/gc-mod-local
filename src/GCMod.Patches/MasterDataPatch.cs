@@ -44,8 +44,6 @@ public static class MasterDataPatch
 
 	public static void Install()
 	{
-		//IL_00d3: Unknown result type (might be due to invalid IL or missing references)
-		//IL_00da: Expected O, but got Unknown
 		lock (Lifecycle)
 		{
 			if (_loadDetour != null)
@@ -115,8 +113,6 @@ public static class MasterDataPatch
 
 	private static MethodInfo FindLoadCallback()
 	{
-		//IL_004a: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0050: Expected O, but got Unknown
 		MethodInfo[] array = ((IEnumerable<MethodInfo>)Il2CppType.Of<MasterLoader<ItemMaster>>().GetMethods((BindingFlags)38)).Where(delegate(MethodInfo method)
 		{
 			if (((MethodBase)method).IsPrivate && !((MethodBase)method).IsGenericMethod && ((MemberInfo)method).Name.StartsWith("<Load>b__", StringComparison.Ordinal) && method.ReturnType.FullName == "System.Void")
@@ -165,11 +161,8 @@ public static class MasterDataPatch
 	[HarmonyPatch(typeof(TextCompressUtil), "Decompress", new Type[] { typeof(string) })]
 	private static void OnDecompressed(ref string __result)
 	{
-		//IL_0073: Unknown result type (might be due to invalid IL or missing references)
-		//IL_007a: Expected O, but got Unknown
-		//IL_0040: Unknown result type (might be due to invalid IL or missing references)
 		IntPtr pendingLoader = _pendingLoader;
-		if (pendingLoader == IntPtr.Zero)
+		if (pendingLoader == IntPtr.Zero || string.IsNullOrEmpty(__result))
 		{
 			return;
 		}
