@@ -18,11 +18,11 @@
 
 ### 步骤 1：下载补丁
 前往 [GitHub Releases](https://github.com/kristina1Q/gc-mod-local/releases) 页面，下载最新发布的压缩包：
-- **首次安装 / 完整包**：`GCMod-Local-v7.3.2.zip`
+- **首次安装 / 完整包**：`GCMod-Local-v7.3.1.zip`（安装后启动游戏将自动热更新至最新代码与汉化）
 - **已有 v7.3.0 旧版一键升级**：下载仅 50KB 左右的 `GCMod-Updater-Upgrade-Only.zip` 解压覆盖，启动游戏即可自动差量拉取最新汉化！
 
 ### 步骤 2：解压并复制到游戏目录
-1. 解压下载的 `GCMod-Local-v7.3.2.zip`。
+1. 解压下载的 `GCMod-Local-v7.3.1.zip`。
 2. 将压缩包解压出的所有文件与文件夹，复制并粘贴到您的《Girls' Creation》游戏安装根目录下（即 **`GC.exe` 所在的文件夹**）。
 
 解压后游戏根目录结构预览：
