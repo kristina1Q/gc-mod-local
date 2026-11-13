@@ -18,10 +18,11 @@
 
 ### 步骤 1：下载补丁
 前往 [GitHub Releases](https://github.com/kristina1Q/gc-mod-local/releases) 页面，下载最新发布的压缩包：
-`GCMod-Local-v7.3.0.zip`
+- **首次安装 / 完整包**：`GCMod-Local-v7.3.2.zip`
+- **已有 v7.3.0 旧版一键升级**：下载仅 50KB 左右的 `GCMod-Updater-Upgrade-Only.zip` 解压覆盖，启动游戏即可自动差量拉取最新汉化！
 
 ### 步骤 2：解压并复制到游戏目录
-1. 解压下载的 `GCMod-Local-v7.3.0.zip`。
+1. 解压下载的 `GCMod-Local-v7.3.2.zip`。
 2. 将压缩包解压出的所有文件与文件夹，复制并粘贴到您的《Girls' Creation》游戏安装根目录下（即 **`GC.exe` 所在的文件夹**）。
 
 解压后游戏根目录结构预览：
@@ -36,8 +37,11 @@
 ├── dotnet/                        [IL2CPP 运行时环境]
 └── BepInEx/                       [核心插件与本地翻译库]
     ├── config/
-    │   └── GCMod.cfg              (补丁配置文件)
+    │   ├── GCMod.cfg              (汉化补丁配置文件)
+    │   └── com.kristina1q.gcmod.updater.cfg (增量热更新配置)
     ├── core/                      (BepInEx 核心程序)
+    ├── patchers/
+    │   └── GCModUpdater.dll       (开屏前自动差量热更新器)
     └── plugins/
         └── GCMod/
             ├── GCMod.dll          (汉化核心补丁模块)
@@ -47,7 +51,10 @@
 ```
 
 ### 步骤 3：启动游戏
-直接双击运行游戏根目录下的 **`GC.exe`**，即可直接畅享全中文界面与剧情！
+直接双击运行游戏根目录下的 **`GC.exe`**，即可自动检查并差量更新汉化数据，畅享全中文界面与剧情！
+
+> **🔄 增量自动更新模式说明（v7.3.1 起内置）**  
+> 本补丁自 v7.3.1 起内置 `GCModUpdater.dll` 热更新器：此后每次启动游戏时，都会先比对线上最新清单的 MD5，**仅下载发生变化或新增的少量文件**；若无联网或检查超时，将自动跳过并继续使用本地离线翻译，不影响正常进入游戏。可在 `BepInEx/config/com.kristina1q.gcmod.updater.cfg` 中随时开关或调整。
 
 ---
 
@@ -85,6 +92,7 @@ gc-mod-local/
 │   ├── GCMod/                     # 插件生命周期、配置管理、热键支持
 │   ├── GCMod.Patches/             # UI 挂钩 (UiPatch.cs)、主数据拦截 (MasterDataPatch.cs)
 │   ├── GCMod.Services/            # 本地翻译缓存与管理器 (TranslationManager.cs)
+│   ├── GCModUpdater/              # Preloader 在线增量自动热更新器 (GCModUpdater.dll)
 │   └── GCMod.csproj
 ├── translations/                  # 本地化翻译数据源
 │   └── zh-Hans/

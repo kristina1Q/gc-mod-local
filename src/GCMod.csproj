@@ -6,6 +6,7 @@
     <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GameDir Condition="'$(GameDir)' == ''">C:\Users\34632\girlscreation_r</GameDir>
+    <DefaultItemExcludes>$(DefaultItemExcludes);GCModUpdater\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +42,9 @@
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(GameDir)\BepInEx\interop\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreFontEngineModule">
+      <HintPath>$(GameDir)\BepInEx\interop\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
       <HintPath>$(GameDir)\BepInEx\interop\UnityEngine.InputLegacyModule.dll</HintPath>

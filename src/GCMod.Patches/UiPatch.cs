@@ -129,6 +129,10 @@ public static class UiPatch
 	{
 		try
 		{
+			if (__instance != null && (UnityEngine.Object)__instance != (UnityEngine.Object)null && ((UnityEngine.Object)__instance).name == "TextFactorName" && __instance.m_enableAutoSizing && __instance.m_fontSizeMin > 16f)
+			{
+				__instance.m_fontSizeMin = 16f;
+			}
 			if (_isTranslating || value == null || value.Length <= 1 || !Config.Translation.Value)
 			{
 				return;

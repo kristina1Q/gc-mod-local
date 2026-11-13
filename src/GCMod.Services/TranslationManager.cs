@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore;
 using Utility.Assets;
 
 namespace GCMod.Services;
@@ -47,6 +48,7 @@ public sealed class TranslationManager : IDisposable
 		{
 			if (!_disposed && !TMP_Settings.fallbackFontAssets.Contains(_font.Asset))
 			{
+				NormalizeFallbackFontMetrics(_font.Asset);
 				TMP_Settings.fallbackFontAssets.Add(_font.Asset);
 				Logger.Info("Font loaded: " + ((UnityEngine.Object)_font.Asset).name);
 			}
@@ -56,6 +58,38 @@ public sealed class TranslationManager : IDisposable
 		});
 		_fontCoroutine = Plugin.Instance.StartCoroutine(BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions.WrapToIl2Cpp(_fontLoad));
 		LoadTranslationAsync();
+	}
+
+	private static void NormalizeFallbackFontMetrics(TMP_FontAsset fontAsset)
+	{
+		if ((UnityEngine.Object)(object)fontAsset == (UnityEngine.Object)null)
+		{
+			return;
+		}
+		try
+		{
+			FaceInfo faceInfo = fontAsset.faceInfo;
+			float pointSize = (faceInfo.m_PointSize > 0f) ? faceInfo.m_PointSize : 29f;
+			float ratio = pointSize / 29f;
+			// Match GameFont vertical metrics (29pt: ascent 25.52, descent -3.48, lineHeight 40)
+			// so fallback glyphs do not inflate line height or trigger TMP Truncate overflow.
+			faceInfo.m_LineHeight = 40f * ratio;
+			faceInfo.m_AscentLine = 25.52f * ratio;
+			faceInfo.m_CapLine = 23f * ratio;
+			faceInfo.m_MeanLine = 14f * ratio;
+			faceInfo.m_Baseline = 0f;
+			faceInfo.m_DescentLine = -3.48f * ratio;
+			faceInfo.m_SuperscriptOffset = 25.52f * ratio;
+			faceInfo.m_SubscriptOffset = -3.48f * ratio;
+			faceInfo.m_UnderlineOffset = -2.9f * ratio;
+			faceInfo.m_StrikethroughOffset = 5.6f * ratio;
+			faceInfo.m_TabWidth = 8f * ratio;
+			fontAsset.faceInfo = faceInfo;
+		}
+		catch (Exception ex)
+		{
+			Logger.Warn("Failed to normalize fallback font metrics: " + ex.Message);
+		}
 	}
 
 	public void Refresh()
